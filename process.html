@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Form</title>
+    <style>
+        body {
+            background-color: rgb(228, 185, 91);
+            font-family: Arial, sans-serif;
+        }
+        .error {
+            background-color: red;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            var valid = true;
+            var name = document.forms["orderForm"]["name"].value;
+            var email = document.forms["orderForm"]["email"].value;
+            var pieces = document.forms["orderForm"]["pieces"].value;
+            var day = document.forms["orderForm"]["day"].value;
+
+            var emailPattern = /^([A-Za-z0-9_\-\.])+@([A-Za-z0-9_\-\.])+\.[A-Za-z]{2,4}$/;
+
+            if (name.length < 8 || name.length > 30) {
+                document.forms["orderForm"]["name"].classList.add("error");
+                valid = false;
+            } else {
+                document.forms["orderForm"]["name"].classList.remove("error");
+            }
+
+            if (!emailPattern.test(email)) {
+                document.forms["orderForm"]["email"].classList.add("error");
+                valid = false;
+            } else {
+                document.forms["orderForm"]["email"].classList.remove("error");
+            }
+
+            if (isNaN(pieces) || pieces < 1 || pieces > 10) {
+                document.forms["orderForm"]["pieces"].classList.add("error");
+                valid = false;
+            } else {
+                document.forms["orderForm"]["pieces"].classList.remove("error");
+            }
+
+            var validDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+            if (!validDays.includes(day)) {
+                document.forms["orderForm"]["day"].classList.add("error");
+                valid = false;
+            } else {
+                document.forms["orderForm"]["day"].classList.remove("error");
+            }
+
+            return valid;
+        }
+    </script>
+</head>
+<body>
+    <h1>Dijanira Muachifi and U2FELP</h1>
+    <form name="orderForm" action="process.php" method="post" onsubmit="return validateForm()">
+        Name: <input type="text" name="name"><br>
+        Email: <input type="text" name="email"><br>
+        Pieces: <input type="text" name="pieces"><br>
+        Day: 
+        <select name="day">
+            <option value="">Select a day</option>
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+        </select><br>
+        <input type="submit" value="Send">
+    </form>
+    <img src="image.jpg" alt="Laptop on grass">
+</body>
+</html>
